@@ -251,7 +251,7 @@
 module io.cayla.web "0.2.7" {
 
 	shared import java.base "7";
-	shared import ceylon.net "1.0.0";
-	shared import io.vertx.ceylon "0.3.9";
+	shared import ceylon.net "1.0.1";
+	shared import io.vertx.ceylon "0.3.11";
 
 } 

@@ -33,7 +33,7 @@ shared Template(<String->Object>*) loadSimpleTemplate(String|File file) {
             }
             return foo;
         } finally {
-            reader.destroy();
+            reader.destroy(null);
         }
     } else {
         throw Exception("TEMPLATE ``file`` NOT FOUND");

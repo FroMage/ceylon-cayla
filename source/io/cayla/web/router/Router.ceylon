@@ -1,3 +1,6 @@
+import ceylon.collection { HashMap, HashSet }
+
+
 shared alias Node => [Mount, Router];
 shared alias Path => {String*}|String;
 
@@ -118,7 +121,7 @@ shared class Router(
                     for (atom in match[1])
                         atom
             ];
-            value match = RouteMatch(this, matchPath, LazyMap(matchParameters));
+            value match = RouteMatch(this, matchPath, HashMap{*matchParameters});
             
             // Return the previous solutions + this match
             return concatenate(resolutions, {match});
@@ -136,7 +139,7 @@ shared class Router(
         case (is Map<String, String>) {
             ret = path_(parameters, emptySet);
         } else {
-            ret = path_(LazyMap(parameters), emptySet);
+            ret = path_(HashMap{*parameters}, emptySet);
         }
         // this makes a bug
         // value first = ret.first;
@@ -167,7 +170,7 @@ shared class Router(
             case (is Expression) {
                 if (exists val = parameters.get(mount.name)) {
                     segment = {val};
-                    nextPathParameters = pathParameters.union(LazySet({mount.name}));
+                    nextPathParameters = pathParameters.union(HashSet{mount.name});
                 } else {
                     return null;
                 }
@@ -175,7 +178,7 @@ shared class Router(
             case (is Any) {
                 if (exists val = parameters.get(mount.name)) {
                     segment = unwrap(val);
-                    nextPathParameters = pathParameters.union(LazySet({mount.name}));
+                    nextPathParameters = pathParameters.union(HashSet{mount.name});
                 } else {
                     return null;
                 }
@@ -183,7 +186,7 @@ shared class Router(
             case (is OneOrMore) {
                 if (exists val = parameters.get(mount.name), val.size > 0) {
                     segment = unwrap(val);
-                    nextPathParameters = pathParameters.union(LazySet({mount.name}));
+                    nextPathParameters = pathParameters.union(HashSet{mount.name});
                 } else {
                     return null;
                 }
